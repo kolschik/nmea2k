@@ -2,6 +2,10 @@
 #include "stdint.h"
 #include "can.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef enum {
     N2kOnOff_Off=0,         ///< No, Off, Disabled
     N2kOnOff_On=1,          ///< Yes, On, Enabled
@@ -51,6 +55,8 @@ void SetN2kPGN127488(tN2kMsg_t *N2kMsg, uint8_t EngineInstance, uint16_t rpm, ui
 void SetN2kPGN128259(tN2kMsg_t *N2kMsg, uint8_t SID, uint16_t WaterRef, uint16_t GroundRef, tN2kSpeedWaterReferenceType SWRT);
 
 int ParseN2kPGN127502(tN2kMsg_t *N2kMsg, tN2kOnOff *sw, uint8_t *bank);
+int ParseN2kPGN128259(tN2kMsg_t *N2kMsg, uint8_t *SID, uint16_t * WaterRef, uint16_t *GroundRef, tN2kSpeedWaterReferenceType *SWRT);
+int ParseN2kPGN127488(tN2kMsg_t *N2kMsg, uint8_t *EngineInstance, uint16_t *rpm, uint32_t *boost, int8_t *trim);
 /************************************************************************//**
  * \brief Convert a CAN Id to NMEA2000 values
  *
@@ -64,3 +70,7 @@ void CanIdToN2k(uint32_t id, tN2kMsg_t *msg);
 
 
 typedef int (*nmea_send_handler)(tN2kMsg_t *msg, void *argument);
+
+#ifdef __cplusplus
+}
+#endif

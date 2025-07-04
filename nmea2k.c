@@ -1,5 +1,6 @@
 #include <string.h>
-#include <nmea.h>
+#include <nmea2k.h>
+#include <errno.h>
 
 uint8_t _N2kMaxCanBusAddress = 251;
 uint32_t _N2kPGNIsoAddressClaim = 60928L;
@@ -38,7 +39,7 @@ void SetN2kPGN127488(tN2kMsg_t *N2kMsg, uint8_t EngineInstance, uint16_t rpm, ui
 }
 
 int ParseN2kPGN127488(tN2kMsg_t *N2kMsg, uint8_t *EngineInstance, uint16_t *rpm, uint32_t *boost, int8_t *trim) {
-    if (N2kMsg->PGN != 127502L){
+    if (N2kMsg->PGN != 127488L){
         return EINVAL;
     }
 
