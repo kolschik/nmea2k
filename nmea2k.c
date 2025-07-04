@@ -149,6 +149,36 @@ void SetN2kPGN127505(tN2kMsg_t *N2kMsg, uint8_t Instance, tN2kFluidType FluidTyp
     N2kMsg->Data[7] = 0xff;
 }
 
+int ParseN2kPGN127505(tN2kMsg_t *N2kMsg, uint8_t *Instance, tN2kFluidType *FluidType, uint16_t *Level, uint32_t *Capacity) {
+    if (N2kMsg->PGN != 127505L){
+        return EINVAL;
+    }
+
+    uint8_t IFt=N2kMsg->Data[0];
+
+    *Instance=IFt&0x0f;
+    *FluidType=(tN2kFluidType)((IFt>>4)&0x0f);
+    *Level = (N2kMsg->Data[1] | (uint16_t) N2kMsg->Data[2] << 8);
+    *Capacity = (N2kMsg->Data[3] | ((uint32_t) N2kMsg->Data[4] << 8) 
+                | ((uint32_t) N2kMsg->Data[5] << 16) | ((uint32_t) N2kMsg->Data[6] << 24));
+
+    return 0;
+}
+
+int ParseN2kPGN127508(tN2kMsg_t *N2kMsg, uint8_t* BatInst, uint16_t *BatVolt, uint16_t *BatCur, uint16_t *BatTemp, uint8_t *SID) {
+    if (N2kMsg->PGN != 127508L){
+        return EINVAL;
+    }
+    *BatInst = N2kMsg->Data[0];
+
+    *BatVolt = (N2kMsg->Data[1] | (uint16_t) N2kMsg->Data[2] << 8);
+    *BatCur = (N2kMsg->Data[3] | (uint16_t) N2kMsg->Data[4] << 8);
+    *BatTemp = (N2kMsg->Data[5] | (uint16_t) N2kMsg->Data[6] << 8);
+    *SID = N2kMsg->Data[7];
+
+    return 0;
+}
+
 void SetN2kPGN127751(tN2kMsg_t *N2kMsg, uint8_t Instance, uint16_t Voltage, uint32_t Current, uint8_t SID) {
     N2kMsg->PGN = 127751L;
     N2kMsg->Data[0] = SID;

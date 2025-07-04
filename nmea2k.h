@@ -55,8 +55,10 @@ void SetN2kPGN127488(tN2kMsg_t *N2kMsg, uint8_t EngineInstance, uint16_t rpm, ui
 void SetN2kPGN128259(tN2kMsg_t *N2kMsg, uint8_t SID, uint16_t WaterRef, uint16_t GroundRef, tN2kSpeedWaterReferenceType SWRT);
 
 int ParseN2kPGN127502(tN2kMsg_t *N2kMsg, tN2kOnOff *sw, uint8_t *bank);
+int ParseN2kPGN127505(tN2kMsg_t *N2kMsg, uint8_t *Instance, tN2kFluidType *FluidType, uint16_t *Level, uint32_t *Capacity);
 int ParseN2kPGN128259(tN2kMsg_t *N2kMsg, uint8_t *SID, uint16_t * WaterRef, uint16_t *GroundRef, tN2kSpeedWaterReferenceType *SWRT);
 int ParseN2kPGN127488(tN2kMsg_t *N2kMsg, uint8_t *EngineInstance, uint16_t *rpm, uint32_t *boost, int8_t *trim);
+int ParseN2kPGN127508(tN2kMsg_t *N2kMsg, uint8_t* BatInst, uint16_t *BatVolt, uint16_t *BatCur, uint16_t *BatTemp, uint8_t *SID);
 /************************************************************************//**
  * \brief Convert a CAN Id to NMEA2000 values
  *
