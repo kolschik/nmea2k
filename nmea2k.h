@@ -53,6 +53,7 @@ void SetN2kPGN127505(tN2kMsg_t *N2kMsg, uint8_t Instance, tN2kFluidType FluidTyp
 void SetN2kPGN127751(tN2kMsg_t *N2kMsg, uint8_t Instance, uint16_t Voltage, uint32_t Current, uint8_t SID);
 void SetN2kPGN127488(tN2kMsg_t *N2kMsg, uint8_t EngineInstance, uint16_t rpm, uint32_t boost, int8_t trim);
 void SetN2kPGN128259(tN2kMsg_t *N2kMsg, uint8_t SID, uint16_t WaterRef, uint16_t GroundRef, tN2kSpeedWaterReferenceType SWRT);
+void SetN2kPGN127502(tN2kMsg_t *N2kMsg, uint32_t bank, tN2kOnOff *sw, const uint8_t sw_num);
 
 int ParseN2kPGN127502(tN2kMsg_t *N2kMsg, tN2kOnOff *sw, uint8_t *bank);
 int ParseN2kPGN127505(tN2kMsg_t *N2kMsg, uint8_t *Instance, tN2kFluidType *FluidType, uint16_t *Level, uint32_t *Capacity);
