@@ -50,16 +50,23 @@ int packN2k(tN2kMsg_t *N2kMsg, can_fifo_t *fifo);
 
 void SetN2kPGN127508(tN2kMsg_t *N2kMsg, uint8_t BatInst, uint16_t BatVolt, uint16_t BatCur, uint16_t BatTemp, uint8_t SID);
 void SetN2kPGN127505(tN2kMsg_t *N2kMsg, uint8_t Instance, tN2kFluidType FluidType, uint16_t Level, uint32_t Capacity);
-void SetN2kPGN127751(tN2kMsg_t *N2kMsg, uint8_t Instance, uint16_t Voltage, uint32_t Current, uint8_t SID);
+void SetN2kPGN127751(tN2kMsg_t *N2kMsg, uint8_t Instance, int16_t Voltage, int32_t Current, uint8_t SID);
 void SetN2kPGN127488(tN2kMsg_t *N2kMsg, uint8_t EngineInstance, uint16_t rpm, uint32_t boost, int8_t trim);
 void SetN2kPGN128259(tN2kMsg_t *N2kMsg, uint8_t SID, uint16_t WaterRef, uint16_t GroundRef, tN2kSpeedWaterReferenceType SWRT);
 void SetN2kPGN127502(tN2kMsg_t *N2kMsg, uint32_t bank, tN2kOnOff *sw, const uint8_t sw_num);
 
+int ParseN2kPGN127501(tN2kMsg_t *N2kMsg, tN2kOnOff *sw, uint8_t *bank);
 int ParseN2kPGN127502(tN2kMsg_t *N2kMsg, tN2kOnOff *sw, uint8_t *bank);
 int ParseN2kPGN127505(tN2kMsg_t *N2kMsg, uint8_t *Instance, tN2kFluidType *FluidType, uint16_t *Level, uint32_t *Capacity);
 int ParseN2kPGN128259(tN2kMsg_t *N2kMsg, uint8_t *SID, uint16_t * WaterRef, uint16_t *GroundRef, tN2kSpeedWaterReferenceType *SWRT);
 int ParseN2kPGN127488(tN2kMsg_t *N2kMsg, uint8_t *EngineInstance, uint16_t *rpm, uint32_t *boost, int8_t *trim);
 int ParseN2kPGN127508(tN2kMsg_t *N2kMsg, uint8_t* BatInst, uint16_t *BatVolt, uint16_t *BatCur, uint16_t *BatTemp, uint8_t *SID);
+
+/**
+ * @param voltage = int16_t scale 0.1V
+ * @param current = int24_t scale 0.01 A
+ */
+int ParseN2kPGN127751(tN2kMsg_t *N2kMsg, uint8_t* instance, int16_t *voltage, int32_t *current, uint8_t *SID);
 /************************************************************************//**
  * \brief Convert a CAN Id to NMEA2000 values
  *

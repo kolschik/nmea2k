@@ -179,7 +179,7 @@ int ParseN2kPGN127508(tN2kMsg_t *N2kMsg, uint8_t* BatInst, uint16_t *BatVolt, ui
     return 0;
 }
 
-void SetN2kPGN127751(tN2kMsg_t *N2kMsg, uint8_t Instance, uint16_t Voltage, uint32_t Current, uint8_t SID) {
+void SetN2kPGN127751(tN2kMsg_t *N2kMsg, uint8_t Instance, int16_t Voltage, int32_t Current, uint8_t SID) {
     N2kMsg->PGN = 127751L;
     N2kMsg->Data[0] = SID;
     N2kMsg->Data[1] = Instance;
@@ -194,6 +194,22 @@ void SetN2kPGN127751(tN2kMsg_t *N2kMsg, uint8_t Instance, uint16_t Voltage, uint
     N2kMsg->Data[7] = 0xff;
 }
 
+int ParseN2kPGN127501(tN2kMsg_t *N2kMsg, tN2kOnOff *sw, uint8_t *bank) {
+    if (N2kMsg->PGN != 127501L){
+        return EINVAL;
+    }
+    uint8_t sw_num = 0;
+    *bank = N2kMsg->Data[0];
+    for (uint8_t i=1; i<8; i++){
+        sw[sw_num++] = (N2kMsg->Data[i] >> 0) & 0x3;
+        sw[sw_num++] = (N2kMsg->Data[i] >> 2) & 0x3;
+        sw[sw_num++] = (N2kMsg->Data[i] >> 4) & 0x3;
+        sw[sw_num++] = (N2kMsg->Data[i] >> 6) & 0x3;
+    }
+
+    return 0;
+}
+
 int ParseN2kPGN127502(tN2kMsg_t *N2kMsg, tN2kOnOff *sw, uint8_t *bank) {
     if (N2kMsg->PGN != 127502L){
         return EINVAL;
@@ -206,6 +222,19 @@ int ParseN2kPGN127502(tN2kMsg_t *N2kMsg, tN2kOnOff *sw, uint8_t *bank) {
         sw[sw_num++] = (N2kMsg->Data[i] >> 2) & 0x3;
         sw[sw_num++] = (N2kMsg->Data[i] >> 0) & 0x3;
     }
+
+    return 0;
+}
+
+int ParseN2kPGN127751(tN2kMsg_t *N2kMsg, uint8_t* instance, int16_t *voltage, int32_t *current, uint8_t *SID) {
+    if (N2kMsg->PGN != 127751L){
+        return EINVAL;
+    }
+
+    *SID = N2kMsg->Data[0];
+    *instance = N2kMsg->Data[1];
+    *voltage = (N2kMsg->Data[2] | (uint16_t) N2kMsg->Data[3] << 8);
+    *current = (N2kMsg->Data[4] | ((uint32_t) N2kMsg->Data[5] << 8) | ((uint32_t) N2kMsg->Data[6] << 16));
 
     return 0;
 }
