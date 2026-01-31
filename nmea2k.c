@@ -109,7 +109,7 @@ void SetN2kPGN127508(tN2kMsg_t *N2kMsg, uint8_t BatInst, uint16_t BatVolt, uint1
 
 void SetN2kPGN127501(tN2kMsg_t *N2kMsg, uint32_t bank, tN2kOnOff *sw, const uint8_t sw_num) {
     uint64_t BankStatus = 0xffffffffffffffff;
-    for (uint8_t i=0; i<sw_num; i++){
+    for (int i=sw_num-1; i>=0; i--){
         BankStatus = (BankStatus << 2) | sw[i];
     }
     BankStatus = (BankStatus << 8) | bank;
@@ -120,7 +120,7 @@ void SetN2kPGN127501(tN2kMsg_t *N2kMsg, uint32_t bank, tN2kOnOff *sw, const uint
 
 void SetN2kPGN127502(tN2kMsg_t *N2kMsg, uint32_t bank, tN2kOnOff *sw, const uint8_t sw_num) {
     uint64_t BankStatus = 0xffffffffffffffff;
-    for (uint8_t i=0; i<sw_num; i++){
+    for (int i=sw_num-1; i>=0; i--){
         BankStatus = (BankStatus << 2) | sw[i];
     }
     BankStatus = (BankStatus << 8) | bank;
